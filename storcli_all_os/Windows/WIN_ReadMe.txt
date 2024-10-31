@@ -1,0 +1,1 @@
+The command prompt used to run storcli needs to have administrative privileges.

@@ -1,0 +1,41 @@
+
+# Documentação dos Comandos para Configuração do RAID 10 com Hot Spare
+# Incluindo Comandos de Visualização e Explicações Passo a Passo
+
+## 1. Visualizando o Status dos Discos e Volumes
+
+### Listar Todos os Discos Físicos Conectados ao Controlador 0
+   storcli.exe /c0/eall/sall show
+   - Use este comando para verificar o status de todos os discos físicos conectados ao controlador, incluindo seus slots e estado.
+
+### Visualizar Todos os Volumes no Controlador 0
+   storcli.exe /c0/vall show
+   - Este comando lista todos os volumes configurados no controlador, mostrando os drives virtuais (VDs) e seus IDs para fácil referência.
+
+## 2. Criando e Configurando Arrays RAID
+
+### Criar RAID 1 com Dois Discos (para Teste)
+   storcli.exe /c0 add vd raid1 drives=252:0,252:1
+   - Este comando cria um array RAID 1 com discos nos slots 252:0 e 252:1 para testar a funcionalidade RAID do controlador.
+
+### Criar RAID 10 com 4 Discos Usando o Parâmetro `pdperarray`
+   storcli.exe /c0 add vd raid10 drives=252:0,252:1,252:2,252:4 pdperarray=2
+   - Configura um array RAID 10 usando discos nos slots 252:0, 252:1, 252:2 e 252:4.
+   - O parâmetro `pdperarray=2` define os discos em pares (espelhamento RAID 1) que são agrupados para formar o RAID 10.
+
+## 3. Configurando um Disco como Hot Spare
+
+### Configurar o Disco 7 como Hot Spare para o Array RAID
+   storcli.exe /c0/e252/s7 add hotsparedrive dgs=0
+   - Configura o disco no slot 252:7 como Hot Spare para o array RAID no Grupo de Discos 0.
+   - Esse disco substituirá automaticamente qualquer disco que falhe no array, garantindo redundância de dados.
+
+## 4. Verificando Eventos e Logs
+
+### Mostrar Eventos Recentes no Controlador 0
+   storcli.exe /c0 show events
+   - Exibe eventos e logs recentes do controlador, ajudando a monitorar operações e detectar problemas.
+
+# Resumo
+- Esses comandos ajudaram a configurar e verificar um array RAID 10 com um Hot Spare no controlador 0.
+- Os comandos de visualização são úteis para monitorar o status dos discos, volumes e eventos recentes.

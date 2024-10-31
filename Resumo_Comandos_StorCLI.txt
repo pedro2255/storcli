@@ -1,0 +1,32 @@
+
+Resumo de Comandos StorCLI para Configuração do Servidor
+
+1. **Listar Controladoras**:
+   storcli.exe /call show
+
+2. **Verificar o Status dos Discos**:
+   storcli.exe /c0/eall/sall show
+
+3. **Criar um RAID 10** (exemplo com discos específicos):
+   storcli.exe /c0 add vd type=raid10 drives=252:0,252:1,252:2,252:4,252:5,252:6 pdperarray=2
+
+4. **Configurar um Disco como Hotspare** (exemplo com o disco 7):
+   storcli.exe /c0/e252/s7 set hotspare
+
+5. **Excluir Todos os Virtual Drives**:
+   storcli.exe /c0/vall delete
+
+6. **Definir um Disco como "Good"** (remover estado JBOD):
+   storcli.exe /c0/e252/sX set good force
+
+7. **Mostrar Informações Detalhadas do Virtual Drive**:
+   storcli.exe /c0/vall show all
+
+8. **Apagar Configurações Existentes e Limpar Todos os Discos**:
+   storcli.exe /c0 delete force
+
+Notas:
+- Substitua "X" pelo número do slot do disco conforme necessário.
+- Estes comandos são específicos para o controlador 0 (/c0) e enclosure 252 (/e252) do exemplo.
+- Use o comando "show" para confirmar o estado após cada operação.
+
